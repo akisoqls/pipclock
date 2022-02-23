@@ -10,10 +10,17 @@ const ClockVideo: React.VFC<ClockSettings> = (props: ClockSettings) => {
   const [msg, setMsg] = useState('loading...')
 
   useEffect(() => {
+    // console.log(props.appearance)
     const clockEl = clockRef.current
-    if (!clockEl) return
+    if (!clockEl) {
+      console.log('clockRefないerror!')
+      return
+    }
     const clockCtx = clockRef.current.getContext('2d')
-    if (!clockCtx) return
+    if (!clockCtx) {
+      console.log('getContextできないerror!')
+      return
+    }
     clockRef.current.width = props.appearance.width
     clockRef.current.height = props.appearance.height
     if (
@@ -89,7 +96,9 @@ const ClockVideo: React.VFC<ClockSettings> = (props: ClockSettings) => {
   
   useEffect(() => {
     const videoEl = videoRef.current
-    if (!videoEl) return
+    if (!videoEl) {
+      return
+    }
     videoEl.autoplay = true
     videoEl.volume = 0.0
     videoEl.playsInline = true
@@ -99,7 +108,6 @@ const ClockVideo: React.VFC<ClockSettings> = (props: ClockSettings) => {
     if(!clockRef.current) return
     videoEl.srcObject = clockRef.current.captureStream(60)
     videoEl.play()
-    
     videoEl.addEventListener('playing', function () {
       switchCanPip(true)
       setMsg('open clock window')
@@ -108,12 +116,12 @@ const ClockVideo: React.VFC<ClockSettings> = (props: ClockSettings) => {
   return (
     <>
       <Preview className={'clock'}>
-        <canvas ref={clockRef} ></canvas>
         <video
           muted={true}
           playsInline={true}
           ref={videoRef}
         />
+        <canvas ref={clockRef} ></canvas>
       </Preview>
       <p>If the button is disabled, please check Low Power Mode is turned off with iOS.</p>
       <p>ボタンが無効になっている場合は、低電力モードがオフになっていることを確認してください。</p>
@@ -141,6 +149,10 @@ const Preview = styled.div`
       box-shadow: 0px 0px 8px #4448;
       border: 1px solid #888;
     }
+  }
+  & canvas{
+    /* right: -10px; */
+    /* border: 1px solid #f00; */
   }
 `
 
