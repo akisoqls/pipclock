@@ -1,20 +1,14 @@
-import React,{useState,useEffect} from 'react'
-import Clockbody from './clockbody'
+import React from 'react'
 import GlobalStyle from './globalStyle'
+import ClockBody from './clockBody'
 import Githublogo from './images/GitHub_Logo.png'
 
 function App() {
-  const [now, setNow] = useState(new Date())
-  useEffect(() => {
-    setInterval(() => {
-      setNow(new Date())
-    },100)
-  }, [])
   return (
     <div className="App">
       <GlobalStyle/>
       <h1>pipclock</h1>
-      <Clockbody time={now} />
+      <ClockBody />
       <p><button onClick={() => location.reload()} >close / reopen clock window</button></p>
       <p>
         <a href="https://github.com/akisoqls/pipclock">
