@@ -1,3 +1,5 @@
+// hogehoge
+
 import React, { useState, useEffect } from 'react'
 import { ClockSettings } from './types'
 

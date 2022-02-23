@@ -1,3 +1,5 @@
+// hogehoge
+
 import React, { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import {colorCode,isColorCode, ClockSettings } from './types'
