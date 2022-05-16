@@ -1,5 +1,3 @@
-// hogehoge
-
 import React, { useState, useEffect } from 'react'
 import { ClockSettings } from './types'
 
@@ -16,7 +14,7 @@ const ClockBody: React.VFC = () => {
       setNow(new Date())
     },300)
   }, [])
-  
+
   const settings:ClockSettings = {
     time: now,
     appearance: appearances

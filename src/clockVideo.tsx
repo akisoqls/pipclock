@@ -1,5 +1,3 @@
-// hogehoge
-
 import React, { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import {colorCode,isColorCode, ClockSettings } from './types'
@@ -97,7 +95,11 @@ const ClockVideo: React.VFC<ClockSettings> = (props: ClockSettings) => {
   }, [props])
   
   useEffect(() => {
-    const videoEl = videoRef.current
+    type video = HTMLVideoElement & {
+      webkitSetPresentationMode?: (string: string) => void;
+      autoPictureInPicture? : boolean
+    } | null
+    const videoEl:video = videoRef.current
     if (!videoEl) {
       return
     }
@@ -114,6 +116,11 @@ const ClockVideo: React.VFC<ClockSettings> = (props: ClockSettings) => {
       switchCanPip(true)
       setMsg('open clock window')
     })
+    window.addEventListener('blur', () => {
+      if (videoEl.autoPictureInPicture) {
+        videoEl.requestPictureInPicture() // NotAllowedError
+      }
+    })
   }, [])
   return (
     <>
@@ -127,7 +134,25 @@ const ClockVideo: React.VFC<ClockSettings> = (props: ClockSettings) => {
       </Preview>
       <p>If the button is disabled, please check Low Power Mode is turned off with iOS.</p>
       <p>ボタンが無効になっている場合は、低電力モードがオフになっていることを確認してください。</p>
-      <p><button onClick={() => videoRef.current && videoRef.current.requestPictureInPicture()} disabled={!videoRef.current || !canPip}>{msg}</button></p>
+      <p>
+        <button
+          onClick={
+            () => {
+              videoRef.current && videoRef.current.requestPictureInPicture()
+                .then(pictureInPictureWindow => {
+                  console.log(pictureInPictureWindow)
+                })
+            }
+          }
+          disabled={!videoRef.current || !canPip}>{msg}</button>
+      </p>
+      <p>
+        <button onClick={
+          () => {
+            document.exitPictureInPicture()
+          }
+        } >close clock window</button>
+      </p>
     </>
   )
 }

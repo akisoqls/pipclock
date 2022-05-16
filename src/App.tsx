@@ -9,7 +9,6 @@ function App() {
       <GlobalStyle/>
       <h1>pipclock</h1>
       <ClockBody />
-      <p><button onClick={() => location.reload()} >close / reopen clock window</button></p>
       <p>
         <a href="https://github.com/akisoqls/pipclock">
           <img src={Githublogo} height={24}/>
